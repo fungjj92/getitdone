@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../../static/css/normalize.css">
+    <link rel="stylesheet" href="../../../static/css/style.css">
+    <script type="text/javascript" src="../../../static/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="../../../static/js/html5sortable/jquery.sortable.min.js"></script>
+    <script type="text/javascript" src="../../../static/js/jq.js"></script>
+    <meta charset="UTF-8">
+    <title>Get It Done!</title>
+</head>
+<body>
+<article>
+    <section id="title">
+        <h1>Jenny's iPad</h1>
+    </section>
+    <section>
+        <div>
+            <h1>New To-Do's</h1>
+                <form id="addtasks" method="post">
+                {% csrf_token %}
+                    <input id="newtask" type="text" placeholder="Enter new task" name="newtask" required>
+                    <input id="datepicker" type="text" placeholder="MM/DD" name="duedate">
+                    <select>
+                        <option value="todo">To-Do</option>
+                        <option value="newlist">New List</option>
+                    </select>
+                    <input type="submit" value="enter">
+                </form>
+        </div>
+        <h1>Get It Done!</h1>
+            <div id="getitdone">
+                <ul class="tasklist sortable">
+                    <!---new tasks go here -->
+                </ul>
+            </div>
+        <h1>Got It Done!</h1>
+            <div id="gotitdone">
+                <ul class="completedlist sortable">
+                    <!---completed tasks go here -->
+                </ul>
+            </div>
+    </section>
+</article>
+</body>
+</html>
