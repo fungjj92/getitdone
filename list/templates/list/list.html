@@ -1,6 +1,12 @@
+{%  load staticfiles %}
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../static/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../../../static/css/normalize.css">
@@ -11,7 +17,7 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="../../../static/js/html5sortable/jquery.sortable.min.js"></script>
     <script type="text/javascript" src="../../../static/js/jq.js"></script>
-    <meta charset="UTF-8">
+
     <title>Get It Done!</title>
 </head>
 <body>
@@ -25,11 +31,7 @@
                 <form id="addtasks" method="post">
                 {% csrf_token %}
                     <input id="newtask" type="text" placeholder="Enter new task" name="newtask" required>
-                    <input id="datepicker" type="text" placeholder="MM/DD" name="duedate">
-                    <select>
-                        <option value="todo">To-Do</option>
-                        <option value="newlist">New List</option>
-                    </select>
+                    <input id="datepicker" type="text" placeholder="MM/DD/YYYY" name="duedate">
                     <input type="submit" value="enter">
                 </form>
         </div>
@@ -37,12 +39,28 @@
             <div id="getitdone">
                 <ul class="tasklist sortable">
                     <!---new tasks go here -->
+                    {%  if tasks|length == 0 %}
+                        <li> Nothing to do!</li>
+                    {%  endif %}
+
+                    {%  for task in tasks %}
+                        {% if not task.completed %}
+                            <li draggable="true" data-task-id="{{ task.id }}" class="taskText"><span class="handle">&nbsp; : : </span><button class="delete">&times;</button>
+                            <strong>{{ task.duedate }}</strong> {{ task.task }}</li>
+                        {%  endif %}
+                    {%  endfor %}
                 </ul>
             </div>
         <h1>Got It Done!</h1>
             <div id="gotitdone">
                 <ul class="completedlist sortable">
                     <!---completed tasks go here -->
+                    {%  for task in tasks %}
+                        {% if task.completed %}
+                           <li draggable="true" data-task-id="{{ task.id }}" class="taskText"><span class="handle">&nbsp; : : </span><button class="delete">&times;</button>
+                            <strong>{{ task.duedate }}</strong> {{ task.task }}</li>
+                        {%  endif %}
+                    {%  endfor %}
                 </ul>
             </div>
     </section>
