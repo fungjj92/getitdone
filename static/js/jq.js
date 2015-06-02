@@ -7,16 +7,17 @@ function addActions(task) {
     task = $(task);
 
     //Add task deletion function to button
-    task.find(".delete").click(function () {
+    task.find(".delete").click(function (event) {
+        event.stopPropagation();
         //AJAX call to db
-        var wanted = $(this.parentNode);
+        var thistask = $(this.parentNode);
         $.post(
             '/list/delete',
-            {'id': wanted.attr('data-task-id')}
+            {'id': thistask.attr('data-task-id')}
         )
             .done(function(data){
                 //remove fxn
-                wanted.remove();
+                thistask.remove();
             })
             .fail(function () {
                 console.log("Unable to delete task")
@@ -24,7 +25,7 @@ function addActions(task) {
     });
 
     //Add task completion switch function to click
-    task.find(".taskText").click(function(){
+    task.click(function(){
         //make the found taskrow a jquery object
         var thistask = $(this);
 
@@ -66,15 +67,12 @@ function createTask(taskText, dueDate){
     )
         .done(function(data) {
             var buttons = '<li draggable="true" data-task-id="' + data.id + '"class="taskText"><span class="handle">&nbsp; : : </span><button class="delete">&times;</button>';
-            //later, refactor below to not even differentiate
             if (dueDate !== '' && dueDate !== null){
                 var newTask = $(buttons + '<strong>' + dueDate + '</strong> ' + taskText + '</li>');
-                addActions(newTask);
             } else{
                 var newTask = $(buttons + taskText + '</li>');
-                addActions(newTask);
             }
-            console.log(newTask);
+            addActions(newTask);
             displayTask(newTask);
         })
         .fail(function(){
@@ -82,12 +80,10 @@ function createTask(taskText, dueDate){
         });
 }
 
-
 $(document).ready(function(){
     //Upon page load, all tasks in DB render by code in list.html
     //
-    $(".tasklist, .completedlist").each(function(idx, task){
-        console.log(task);
+    $(".tasklist li, .completedlist li").each(function(idx, task){
         addActions(task);
     });
 

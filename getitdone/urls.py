@@ -20,5 +20,3 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('list.urls')),
 ]
-
-#Eventually, make homepage the login and r'^list/' direct to list.urls
