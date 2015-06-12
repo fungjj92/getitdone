@@ -3,8 +3,6 @@ from django.http import JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
 
-#Create your views here.
-
 #Via JS/JQuery/HTML/CSS, entered tasks are displayed
 #to the index but no changes made to backend. Thus refresh
 #wipes that data. Python/Django to resolve this, adding DB.
